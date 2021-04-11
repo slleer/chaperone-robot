@@ -1,10 +1,18 @@
 // making variables to represent the two divs
 
 window.onload = function() {
+  //useing spread operator (...) to convert the querySelectorAll to array then calling forEach its elements
+  //[...document.querySelectorAll('.homeLink')].forEach(function(item) {item.addEventListener('click', DisplayHomePage, false)});
+  //[...document.querySelectorAll('.aboutLink')].forEach(function(item) {item.addEventListener('click', DisplayAboutPage, false)});
+  [...document.querySelectorAll('.signupLink')].forEach(function(item) {item.addEventListener('click', DisplaySignupPage, false)});
+  [...document.querySelectorAll('.loginLink')].forEach(function(item) {item.addEventListener('click', DisplayLoginPage, false)});
+  //[...document.querySelectorAll('.accountLink')].forEach(function(item) {item.addEventListener('click', DisplayAccountPage, false)});
+  //[...document.querySelectorAll('.settingsLink')].forEach(function(item) {item.removeEventListener('click', DisplaySettingsPage, false)});
+  //[...document.querySelectorAll('logoutLink')].forEach(function(item) {item.removeEventListener('click', DisplayLogout, false)});
   document.getElementById('home').addEventListener('click', DisplayHomePage, false);
   document.getElementById('about').addEventListener('click', DisplayAboutPage, false);
-  document.getElementById('signup').addEventListener('click', DisplaySignupPage, false);
-  document.getElementById('login').addEventListener('click', DisplayLoginPage, false);
+  // document.getElementById('signup').addEventListener('click', DisplaySignupPage, false);
+  // document.getElementById('login').addEventListener('click', DisplayLoginPage, false);
   document.getElementById('account').addEventListener('click', DisplayAccountPage, false);
   document.getElementById('settings').addEventListener('click', DisplaySettingsPage, false);
   document.getElementById('logout').addEventListener('click', DisplayLogoutPage, false);
@@ -27,8 +35,34 @@ document.getElementById('loginPage').style.display = 'none';
 document.getElementById('accountPage').style.display = 'none';
 document.getElementById('settingsPage').style.display = 'none';
 
-function RegistrationValidation(){
+function LoginValidation(event){
+  event.preventDefault();
+  var uname = document.forms["logInForm"]["uname"].value;
+  var password = document.forms["logInForm"]["pswd"].value;
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST",'ioslogin.php', true);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+      response = JSON.stringify(this.responseText);
+      //alert(response);
+      if(response.charAt(0) != 0){
+        DisplayAccountPage();
+      } else {
+
+        return false;
+      }
+    }
+  };
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  var data = "uname=" + uname + "&password=" + password;
+  xhttp.send(data);
+
+}
+
+function RegistrationValidation(event){
   var valid = true;
+  event.preventDefault();
   var errorMsg = "* Please enter a valid ";
   var uname = document.forms["regForm"]["uname"].value;
   var first = document.forms["regForm"]["first"].value;
@@ -65,7 +99,29 @@ function RegistrationValidation(){
     valid = false;
     document.querySelector("div.signUpfakeimg span[class='error passMatch']").textContent = "* Passwords do not match. *";
   }
-  return valid;
+
+  if(valid){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST",'iosRegistration.php', true);
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200){
+        response = JSON.stringify(this.responseText);
+        //alert(response);
+        if(response.charAt(0) != 0){
+          DisplayAccountPage();
+        } else {
+
+          return false;
+        }
+      }
+    };
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    var data = "uname=" + uname + "&first=" + first + "&last=" + last + "&phone=" + phone + "&email=" + email + "&password=" + password;
+    xhttp.send(data);
+  } else {
+
+    return valid;
+  }
 
 
 }
@@ -211,8 +267,8 @@ function DisplayAccountPage() {
   document.getElementById('account').style.display = 'none';
   document.getElementById('signup').style.display = 'none';
   document.getElementById('login').style.display = 'none';
-  document.getElementById('logout').style.display = 'block';
   document.getElementById('settings').style.display = 'block';
+  document.getElementById('logout').style.display = 'block';
 }
 
 function DisplaySettingsPage() {

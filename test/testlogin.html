@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <link rel="stylesheet" type="text/css" href="stylesheet26.css">
+
+    <title>Team 26</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stephen Leer, Team 26">
+
+  </head>
+
+  <body>
+    <div class="heading">
+      <h1>Chaperone Robot</h1>
+    </div>
+    <div class="sub_heading">
+      <h3>Team 26</h3>
+    </div>
+
+    <div class="nav_bar">
+      <hr>
+      <a href="index.html" target="_self">Home</a>
+      <a href="about.html">About Project</a>
+
+      <div class="nav_right">
+        <a href="signup.php">Sign up</a>
+      </div>
+
+    </div>
+
+    <div class="signUpcard loginPIC">
+      <h2>Log in to your Chaperone Robot Account</h2>
+      <h5>Don't have an account? Sign up for an account <a href="signup.php">here</a></h5>
+      <div class="login" >
+        <div class="signUpBox">
+          <form class="form" method="post" target="_self" action="ioslogin.php">
+            <label for="uname">User Name:</label>
+            <input type="text" name="uname" placeholder="Enter User Name" value="" autofocus>
+            <span class="error">*<?php echo $unameErr;?></span>
+
+            <br><br>
+            <label for="pswd">Password:</label>
+            <input type="password" name="pswd" placeholder="Enter Password">
+            <span class="error">*<?php echo $pswdErr;?></span>
+
+            <input type="submit" id="sub" name="submit" value="Log In!">
+            <span class="error"><?php echo "*" . $loginErr;?></span>
+
+          </form>
+        </div>
+      </div>
+      <p>
+
+      </p>
+    </div>
+    <script src="login.js" charset="utf-8"></script>
+  </body>
+</html>
