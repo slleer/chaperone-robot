@@ -22,7 +22,7 @@
       if(!empty($result))
       {
 	if(isset($result)){
-          if($pswd == $result['password'])
+          if($pswd == $result[0]['password'])
           {
             echo 1;
             array_push($json_array, 1, $uname);

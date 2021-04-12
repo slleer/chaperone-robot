@@ -35,6 +35,18 @@ document.getElementById('loginPage').style.display = 'none';
 document.getElementById('accountPage').style.display = 'none';
 document.getElementById('settingsPage').style.display = 'none';
 
+// ***********************************************************************
+//                               GET EVENT DATA
+// ***********************************************************************
+
+function getUserInfo(event){
+  event.preventDefault();
+
+}
+
+// ***********************************************************************
+//                               LOGIN
+// ***********************************************************************
 function LoginValidation(event){
   event.preventDefault();
   var uname = document.forms["logInForm"]["uname"].value;
@@ -59,7 +71,9 @@ function LoginValidation(event){
   xhttp.send(data);
 
 }
-
+// ***********************************************************************
+//                               REGISTRATION
+// ***********************************************************************
 function RegistrationValidation(event){
   var valid = true;
   event.preventDefault();
