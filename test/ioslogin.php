@@ -4,7 +4,7 @@
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uname = test_input($_POST["uname"]);
-    $pswd = test_input($_POST["pswd"]);
+    $pswd = test_input($_POST["password"]);
     $json_array = array();
 
     $servername = "localhost";

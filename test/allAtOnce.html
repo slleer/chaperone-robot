@@ -237,7 +237,7 @@
           <form class="form" name ='logInForm' onsubmit="return LoginValidation(event);" autocomplete="off">
             <label for="uname">User Name:</label>
             <input type="text" name="uname" placeholder="Enter User Name" value="" autofocus>
-            <span class="error">*<?php echo $unameErr;?></span>
+            <span class="error"></span>
 
             <br><br>
             <label for="pswd">Password:</label>
@@ -245,7 +245,7 @@
             <span class="error">*<?php echo $pswdErr;?></span>
             <input type="hidden" name="action" value="login">
             <input type="submit" id="sub" name="submit" value="Log In!">
-            <span class="error"><?php echo "*" . $loginErr;?></span>
+            <span class="error"></span>
 
           </form>
         </div>

@@ -57,11 +57,12 @@ function LoginValidation(event){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
       response = JSON.stringify(this.responseText);
-      //alert(response);
-      if(response.charAt(0) != 0){
+      alert(response);
+      alert("login request return");
+      if(response.charAt(1) != 0){
         DisplayAccountPage();
       } else {
-
+        document.querySelector("div.signUpfakeimg span[class='error']").textContent = response;
         return false;
       }
     }
@@ -120,8 +121,9 @@ function RegistrationValidation(event){
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200){
         response = JSON.stringify(this.responseText);
-        //alert(response);
-        if(response.charAt(0) != 0){
+        alert(response);
+        alert("reg request return");
+        if(response.charAt(1) != 0){
           DisplayAccountPage();
         } else {
 
