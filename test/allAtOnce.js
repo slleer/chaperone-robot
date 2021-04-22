@@ -350,14 +350,14 @@ function DisplayLogoutPage() {
 function getDate(date){
   year = parseInt(date.slice(0,4));
   month = parseInt(date.slice(4, 6)) - 1;
-  day = paseInt(date.slice(6, 8));
+  day = parseInt(date.slice(6, 8));
   hour = parseInt(date.slice(8,10));
   minute = parseInt(date.slice(8,12));
   second = parseInt(date.slice(12));
   return new Date(year,month,day,hour,minute,second);
 }
 
-function updateAccont(){
+function updateAccont(username){
   if(username == null){
 
   } else {
@@ -368,16 +368,14 @@ function updateAccont(){
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200){
         response = JSON.parse(this.responseText);
-        //alert(response)
-        for(int i = 0; i < response.length; i++)  {
-          document.getElementById("pastTrips").innerHTML =
-          "<tr>" +
-          ""
-        }
-
-
-
-
+        alert(response)
+        console.log(response);
+        //print_r(response);
+        for(i in response)  {
+          document.getElementById("pastTrips").innerHTML += "<tr>" + "<td>" +  getDate(response[i].dateTime).toLocaleDateString() + "<\/td><td> " +
+          response[i].gpsLong + " " +  response[i].gpsLat + "</\td><td> " + "<a href=\"" + response[i].filePath + "\">Download<\/a><\/td></\tr>";
+          console.log(String(response[i].filePath));
+         }
       }
     };
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

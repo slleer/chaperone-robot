@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>test input</title>
+  </head>
+  <body>
+    <div id="loginPage" class="signUpcard loginPIC">
+      <h2>Log in to your Chaperone Robot Account</h2>
+      <h5>Don't have an account? Sign up for an account <a href="#" class="signupLink">here</a></h5>
+      <div class="login" >
+        <div class="signUpBox">
+          <form class="form" name ='logInForm' onsubmit="return input(event);" autocomplete="off">
+            <label for="uname">User Name:</label>
+            <input type="text" name="uname" placeholder="Enter User Name" value="" autofocus>
+            <span class="error"></span>
+
+            <br><br>
+            <label for="pswd">Password:</label>
+            <input type="password" name="pswd" placeholder="Enter Password">
+            <span class="error"></span>
+            <input type="hidden" name="action" value="login">
+            <input type="submit" id="sub" name="submit" value="Log In!">
+            <span id="loginError" class="error loginError"></span>
+
+          </form>
+        </div>
+      </div>
+      <p>
+
+      </p>
+    </div>
+    <script src="testInput.js" charset="utf-8"></script>
+  </body>
+</html>
