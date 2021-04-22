@@ -242,10 +242,10 @@
             <br><br>
             <label for="pswd">Password:</label>
             <input type="password" name="pswd" placeholder="Enter Password">
-            <span class="error">*<?php echo $pswdErr;?></span>
+            <span class="error"></span>
             <input type="hidden" name="action" value="login">
             <input type="submit" id="sub" name="submit" value="Log In!">
-            <span class="error"></span>
+            <span id="loginError" class="error loginError"></span>
 
           </form>
         </div>
@@ -262,7 +262,7 @@
   <div class="cardBack" >
     <div class="card">
       <h3 id="accountTitle"></h3>
-      <p id="pastTrips"></p>
+      <table id="pastTrips"></table>
     </div>
   </div>
   <p>

@@ -5,8 +5,7 @@
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uname = test_input($_POST["uname"]);
     $pswd = test_input($_POST["password"]);
-    $json_array = array();
-
+    $json_str = "";
     $servername = "localhost";
     $username = "team26-usr";
     $password = "team26-pass";
@@ -21,31 +20,27 @@
       $result = $stmt->fetchALL();
       if(!empty($result))
       {
-	if(isset($result)){
+	      if(isset($result)){
           if($pswd == $result[0]['password'])
           {
-            echo 1;
-            array_push($json_array, 1, $uname);
+            $json_str = "1username:" . $uname . "&consent:" . $result[0]['consent'];
             //header("Location: account.html");
           }
           else{
-            echo 0;
-            array_push($json_array, 0, "Invalid username/password");
+            $json_str =  "0";
             //header("Location: login.php");
           }
 	      }
       }
       else
       {
-        echo 0;
-        array_push($json_array, 0, "Invalid username/password");
+        $json_str =  "0";
         //header("Location: login.php");
       }
     } catch(PDOException $e) {
-      array_push($json_array, "Connection failed: ", $e->getMessage());
-      echo "Connection failed: " . $e->getMessage();
+      $json_str = "0 " . "Connection failed: " . $e->getMessage();
     }
-    echo json_encode($json_array);
+    echo $json_str;
     $conn = null;
   }
 

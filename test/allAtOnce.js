@@ -25,6 +25,7 @@ window.onload = function() {
   document.querySelector("div.signUpfakeimg input[name='pswdMatch']").addEventListener('input', MatchPassword);
 
 }
+var username;
 document.getElementById('account').style.display = 'none';
 document.getElementById('settings').style.display = 'none';
 document.getElementById('logout').style.display = 'none';
@@ -35,18 +36,6 @@ document.getElementById('loginPage').style.display = 'none';
 document.getElementById('accountPage').style.display = 'none';
 document.getElementById('settingsPage').style.display = 'none';
 
-// ***********************************************************************
-//                               GET EVENT DATA
-// ***********************************************************************
-
-function getUserInfo(event){
-  event.preventDefault();
-
-}
-
-// ***********************************************************************
-//                               LOGIN
-// ***********************************************************************
 function LoginValidation(event){
   event.preventDefault();
   var uname = document.forms["logInForm"]["uname"].value;
@@ -57,12 +46,20 @@ function LoginValidation(event){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
       response = JSON.stringify(this.responseText);
+      alert(response.charAt(0));
+      alert(response.charAt(1));
       alert(response);
-      alert("login request return");
+
       if(response.charAt(1) != 0){
+        username = uname;
+        var formReset = document.getElementsByClassName("form");
+        for(i = 0; i < formReset.length; i+=1)
+        {formReset[i].reset();}
         DisplayAccountPage();
       } else {
-        document.querySelector("div.signUpfakeimg span[class='error']").textContent = response;
+
+	      document.getElementById("loginError").textContent = "Invalid username and/or password";
+	      //alert(response.length);
         return false;
       }
     }
@@ -72,9 +69,7 @@ function LoginValidation(event){
   xhttp.send(data);
 
 }
-// ***********************************************************************
-//                               REGISTRATION
-// ***********************************************************************
+
 function RegistrationValidation(event){
   var valid = true;
   event.preventDefault();
@@ -121,12 +116,17 @@ function RegistrationValidation(event){
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200){
         response = JSON.stringify(this.responseText);
-        alert(response);
-        alert("reg request return");
+        //alert(response);
+	alert("here at reg request return");
         if(response.charAt(1) != 0){
+          username = uname;
+          var formReset = document.getElementsByClassName("form");
+          for(i = 0; i < formReset.length; i+=1)
+          {formReset[i].reset();}
           DisplayAccountPage();
         } else {
-
+	  registrationError(parseInt(response.substring(1,4)));
+	  alert(response.substring(1,4));
           return false;
         }
       }
@@ -141,7 +141,21 @@ function RegistrationValidation(event){
 
 
 }
-
+function registrationError(errorCode){
+  switch (errorCode){
+    case 010:
+      document.querySelector("div.signUpfakeimg span[class='error uname']").textContent = "Username already in use, please sign in or choose a different username.";
+      break;
+    case 001:
+      document.querySelector("div.signUpfakeimg span[class='error email']").textContent = "Email is already associated with an account, please sign in or choose a different email.";
+      break;
+    case 011:
+      document.querySelector("div.signUpfakeimg span[class='error email']").textContent = "Email is already associated with an account, please sign in or choose a different email";
+      document.querySelector("div.signUpfakeimg span[class='error uname'}").textContent = "Username already in use, please sign in or choose a different username.";
+      break;
+  }
+  alert(errorCode);
+}
 function TestUsername(e) {
   var errorMsg = "* Please enter a valid username *";
   var usrNameRegEx = new RegExp('^[0-9a-zA-Z\']{1,20}$');
@@ -222,12 +236,19 @@ function DisplayHomePage() {
   document.getElementById('accountPage').style.display = 'none';
   document.getElementById('settingsPage').style.display = 'none';
   document.getElementById('homePage').style.display = 'block';
-
-  document.getElementById('account').style.display = 'none';
-  document.getElementById('settings').style.display = 'none';
-  document.getElementById('logout').style.display = 'none';
-  document.getElementById('signup').style.display = 'block';
-  document.getElementById('login').style.display = 'block';
+  if(username == null){
+    document.getElementById('account').style.display = 'none';
+    document.getElementById('settings').style.display = 'none';
+    document.getElementById('logout').style.display = 'none';
+    document.getElementById('signup').style.display = 'block';
+    document.getElementById('login').style.display = 'block';
+  } else {
+    document.getElementById('signup').style.display = 'none';
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('account').style.display = 'block';
+    document.getElementById('settings').style.display = 'block';
+    document.getElementById('logout').style.display = 'block';
+  }
 }
 function DisplayAboutPage() {
   document.getElementById('signUpPage').style.display = 'none';
@@ -236,12 +257,19 @@ function DisplayAboutPage() {
   document.getElementById('homePage').style.display = 'none';
   document.getElementById('settingsPage').style.display = 'none';
   document.getElementById('aboutPage').style.display = 'block';
-
-  document.getElementById('account').style.display = 'none';
-  document.getElementById('settings').style.display = 'none';
-  document.getElementById('logout').style.display = 'none';
-  document.getElementById('signup').style.display = 'block';
-  document.getElementById('login').style.display = 'block';
+  if(username == null){
+    document.getElementById('account').style.display = 'none';
+    document.getElementById('settings').style.display = 'none';
+    document.getElementById('logout').style.display = 'none';
+    document.getElementById('signup').style.display = 'block';
+    document.getElementById('login').style.display = 'block';
+  } else {
+    document.getElementById('signup').style.display = 'none';
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('account').style.display = 'block';
+    document.getElementById('settings').style.display = 'block';
+    document.getElementById('logout').style.display = 'block';
+  }
 }
 
 function DisplaySignupPage() {
@@ -302,16 +330,58 @@ function DisplaySettingsPage() {
   document.getElementById('logout').style.display = 'block';
 }
 function DisplayLogoutPage() {
-  document.getElementById('aboutPage').style.display = 'none';
-  document.getElementById('signUpPage').style.display = 'none';
-  document.getElementById('loginPage').style.display = 'none';
-  document.getElementById('accountPage').style.display = 'none';
-  document.getElementById('settingsPage').style.display = 'none';
-  document.getElementById('homePage').style.display = 'block';
+  username = null;
+  //currentPage = 0;
+  DisplayHomePage();
+  // document.getElementById('aboutPage').style.display = 'none';
+  // document.getElementById('signUpPage').style.display = 'none';
+  // document.getElementById('loginPage').style.display = 'none';
+  // document.getElementById('accountPage').style.display = 'none';
+  // document.getElementById('settingsPage').style.display = 'none';
+  // document.getElementById('homePage').style.display = 'block';
+  //
+  // document.getElementById('account').style.display = 'none';
+  // document.getElementById('settings').style.display = 'none';
+  // document.getElementById('logout').style.display = 'none';
+  // document.getElementById('signup').style.display = 'block';
+  // document.getElementById('login').style.display = 'block';
+}
 
-  document.getElementById('account').style.display = 'none';
-  document.getElementById('settings').style.display = 'none';
-  document.getElementById('logout').style.display = 'none';
-  document.getElementById('signup').style.display = 'block';
-  document.getElementById('login').style.display = 'block';
+function getDate(date){
+  year = parseInt(date.slice(0,4));
+  month = parseInt(date.slice(4, 6)) - 1;
+  day = paseInt(date.slice(6, 8));
+  hour = parseInt(date.slice(8,10));
+  minute = parseInt(date.slice(8,12));
+  second = parseInt(date.slice(12));
+  return new Date(year,month,day,hour,minute,second);
+}
+
+function updateAccont(){
+  if(username == null){
+
+  } else {
+    var uname = username;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST",'accountInfo.php', true);
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200){
+        response = JSON.parse(this.responseText);
+        //alert(response)
+        for(int i = 0; i < response.length; i++)  {
+          document.getElementById("pastTrips").innerHTML =
+          "<tr>" +
+          ""
+        }
+
+
+
+
+      }
+    };
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    var data = "uname=" + uname;
+    xhttp.send(data);
+  }
 }
